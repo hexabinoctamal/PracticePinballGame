@@ -13,11 +13,7 @@ public class FakeWall : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
-	void Update () 
-	{
-	
-	}
+
 
 
 	//once ball passes through

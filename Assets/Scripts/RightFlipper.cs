@@ -25,7 +25,7 @@ public class RightFlipper : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void FixedUpdate () 
 	{
 	
 		if(Input.GetKey(KeyCode.D))

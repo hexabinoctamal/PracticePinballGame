@@ -16,11 +16,7 @@ public class GameMaster : MonoBehaviour
 	
 	}
 	
-	// Update is called once per frame
-	void Update () 
-	{
 
-	}
 
 	//this is only called when the ball enters the kill box
 	//what it does is makes fakeWall be fake again
