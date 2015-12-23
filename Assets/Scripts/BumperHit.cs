@@ -4,23 +4,12 @@ using System.Collections;
 public class BumperHit : MonoBehaviour {
 
 
-	public float bumpForce;
-	public float forceRadius;
-	public GameObject hitParticles; 
+	[SerializeField]GameObject hitParticles; 
 	
-	void Awake()
-	{
-		bumpForce = 500f;
-		forceRadius = 2f;
-	}
 
 	void OnTriggerEnter(Collider col)
 	{
-		if(col.tag == "TheBall")
-		{
-			col.GetComponent<Rigidbody>().AddForce(col.transform.forward * bumpForce);
-		}
-		Object temp = Instantiate(hitParticles, this.transform.position, Quaternion.identity);
+		Object temp = Instantiate(hitParticles, col.transform.position, Quaternion.identity);
 		Destroy(temp, 1f);
 	}
 	

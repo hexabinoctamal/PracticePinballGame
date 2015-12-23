@@ -9,39 +9,53 @@ public class LeftFlipper : MonoBehaviour {
 	private float restPositionForFlipper = 0f;
 	
 	
-	private HingeJoint theRightFlipper;
+	private HingeJoint theLeftFlipper;
 	private JointSpring spr;
-	
+
+    bool flipperHasBeenFlipped = false;
+
 	// Use this for initialization
 	void Start () 
 	{
 		
-		theRightFlipper = GetComponent<HingeJoint>();
-		theRightFlipper.useSpring = true;
-		spr = theRightFlipper.spring;
+		theLeftFlipper = GetComponent<HingeJoint>();
+		theLeftFlipper.useSpring = true;
+		spr = theLeftFlipper.spring;
 		spr.spring = flipperSpring;
 		spr.damper = flipperDamp;
 		
 	}
 	
-	// Update is called once per frame
+    // Updated is called 1/60
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.A))
+        {
+            flipperHasBeenFlipped = true;
+        }
+        else
+        {
+            flipperHasBeenFlipped = false;
+        }
+    }
+
+	// Fixed Update is called 1/50
 	void FixedUpdate () 
 	{
+
+        if(flipperHasBeenFlipped)
+        {
+            spr.targetPosition = maxAngleForFlipper;
+        }
+        else
+        {
+            spr.targetPosition = restPositionForFlipper;
+        }
 		
-		if(Input.GetKey(KeyCode.A))
-		{
-			
-			spr.targetPosition = maxAngleForFlipper;
-		}
-		else
-		{
-			spr.targetPosition = restPositionForFlipper;
-		}
-		
-		theRightFlipper.spring = spr;
+		theLeftFlipper.spring = spr;
 		
 		
-	}//Update 
+	}//FixedUpdate 
 	
 	
 	

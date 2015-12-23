@@ -10,15 +10,16 @@ public class TheSpring : MonoBehaviour {
 	private bool ballOnSpring;
 
 	// Use this for initialization
-	void Awake () {
+	void Awake () 
+    {
 		ballOnSpring = false;
 		startingPosition = transform.position;
 		fakeSpring = GetComponent<Rigidbody>();
-
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate () 
+    {
 
 		GetComponent<Transform>().position = startingPosition;
 		if(Input.GetKey(KeyCode.Space))
@@ -40,7 +41,7 @@ public class TheSpring : MonoBehaviour {
 	void OnCollisionEnter(Collision theObj)
 	{
 
-		if(theObj.gameObject.tag == "TheBall")
+		if(theObj.gameObject.CompareTag("TheBall"))
 		{
 			ballOnSpring = true;
 		}//if

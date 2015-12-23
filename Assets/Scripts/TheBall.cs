@@ -7,7 +7,6 @@ public class TheBall : MonoBehaviour {
 
 	//because i can't control the y-axiz, i can't have the ball go up/down any kind of elevation
 	//the level design will have to be fairly 2D based even though it is made 3D 
-	public Vector3 startingPosition;
 	public Rigidbody pinball;
 	public GameMaster gameMaster;
 
@@ -15,7 +14,6 @@ public class TheBall : MonoBehaviour {
 	void Awake () 
 	{
 		pinball = GetComponent<Rigidbody>();
-		startingPosition = this.transform.position;
 
 		//the ball keeps spinning for some reason so this gets rid of it from the getgo
 		pinball.freezeRotation = true; 
@@ -30,12 +28,12 @@ public class TheBall : MonoBehaviour {
 
 	void OnTriggerEnter(Collider obj)
 	{
-		if(obj.transform.tag == "DeathBox")
+		if(obj.CompareTag("DeathBox"))
 		{
 			StartCoroutine(WaitToRespawn());
 			gameMaster.Respawn();
 		}
-		if(obj.transform.tag == "FakeWall"){}
+		if(obj.CompareTag("FakeWall")){}
 
 		//once it leaves the fakewall/respawns(upon leaving fakewall), it will continue 
 		//acting like a normal ball properly
@@ -51,7 +49,7 @@ public class TheBall : MonoBehaviour {
 		
 		//to keep the ball from spinning, i freeze it
 		pinball.freezeRotation = true;
-		pinball.transform.position = startingPosition;	//reset the position to its starting point
+		pinball.transform.localPosition = Vector3.zero;	//reset the position to its starting point
 
 	}
 
