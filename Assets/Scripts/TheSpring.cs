@@ -4,41 +4,49 @@ using System.Collections;
 public class TheSpring : MonoBehaviour {
 
 	private Vector3 startingPosition;
-	public Rigidbody fakeSpring;
-	public TheBall ballRef;
+    [SerializeField] Rigidbody theBall;
 
-	private bool ballOnSpring;
+	bool ballOnSpring;
+    float push = 0;
+    float maxPush = 50f;
 
 	// Use this for initialization
 	void Awake () 
     {
 		ballOnSpring = false;
 		startingPosition = transform.position;
-		fakeSpring = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () 
     {
+        /* This works like a normal spring system in pinball games. You will hold space bar
+         * up until a certain point in which the longer you hold space bar, the faster the ball will shoot out
+         * of the beginning section. At the moment, the spring can exert up to 50 units of force. 
+         */ 
 
-		GetComponent<Transform>().position = startingPosition;
-		if(Input.GetKey(KeyCode.Space))
-		{
-			GetComponent<Transform>().position -= new Vector3(0f,0f,-0.2f);
-
-			if(ballOnSpring)
-			{
-				ballRef.pinball.AddForce(transform.forward * 1000);
-			}//if
-
-			//once ball leaves the spring, we can no longer hit it...unless it comes back
-			ballOnSpring = false;
-		}//if
-
+        if(Input.GetKey(KeyCode.Space) && ballOnSpring)
+        {
+            if(push >= maxPush)
+            {
+                push = maxPush;
+            }
+            else
+            {            
+                push += 0.5f; // adds 0.5 unit of force every 1/50 of frame
+            }
+           
+        }
+        else if(Input.GetKeyUp(KeyCode.Space) && ballOnSpring)
+        {
+            Debug.Log(push);
+            theBall.AddForce(Vector3.forward * push, ForceMode.Impulse);
+            push = 0;
+        }
 	}//FixedUpdate()
 
 
-	void OnCollisionEnter(Collision theObj)
+	void OnTriggerEnter(Collider theObj)
 	{
 
 		if(theObj.gameObject.CompareTag("TheBall"))
@@ -46,7 +54,15 @@ public class TheSpring : MonoBehaviour {
 			ballOnSpring = true;
 		}//if
 
-	}//OnCollisionEnter()
+	}//OnTriggerEnter()
+
+    void OnTriggerExit(Collider theObj)
+    {
+        if(theObj.CompareTag("TheBall"))
+        {
+            ballOnSpring = false;
+        }
+    }
 
 
 } //TheSpring Class

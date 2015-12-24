@@ -19,7 +19,7 @@ public class FakeWall : MonoBehaviour {
 	//once ball passes through
 	void OnTriggerExit(Collider theBall)
 	{
-		if(theBall.transform.tag == "TheBall")
+		if(theBall.CompareTag("TheBall"))
 		{
 			theFakeWall.isTrigger = false;
 		}

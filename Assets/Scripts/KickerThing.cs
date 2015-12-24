@@ -4,13 +4,13 @@ using System.Collections;
 public class KickerThing : MonoBehaviour {
 
 
-	public float bumpForce;
-	public float forceRadius;
-	public GameObject hitParticles;
+	[SerializeField] float bumpForce;
+	[SerializeField] float forceRadius;
+	[SerializeField] GameObject hitParticles;
 
 	void Awake()
 	{
-		bumpForce = 500f;
+		bumpForce = 400f;
 		forceRadius = 2f;
 	}
 

@@ -7,7 +7,7 @@ public class TheBall : MonoBehaviour {
 
 	//because i can't control the y-axiz, i can't have the ball go up/down any kind of elevation
 	//the level design will have to be fairly 2D based even though it is made 3D 
-	public Rigidbody pinball;
+	Rigidbody pinball;
 	public GameMaster gameMaster;
 
 	// Use this for initialization
@@ -22,7 +22,15 @@ public class TheBall : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
+        
+        if(GetComponent<Rigidbody>().velocity.magnitude >= 30f)
+        {
 
+            pinball.AddForce(-pinball.velocity.x, -pinball.velocity.y, -pinball.velocity.z);
+            
+        }
+
+        Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
 	}
 	
 
@@ -45,12 +53,11 @@ public class TheBall : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(1);
 		//reset the momentum of the ball
-		pinball.velocity = new Vector3(0f,0f,0f); 
+		pinball.velocity = Vector3.zero; 
 		
 		//to keep the ball from spinning, i freeze it
 		pinball.freezeRotation = true;
 		pinball.transform.localPosition = Vector3.zero;	//reset the position to its starting point
-
 	}
 
 

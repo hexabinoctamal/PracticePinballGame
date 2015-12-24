@@ -10,13 +10,6 @@ public class GameMaster : MonoBehaviour
 	public FakeWall fakeWall;
 	public TheBall thePinball;
 
-	// Use this for initialization
-	void Start () 
-	{
-	
-	}
-	
-
 
 	//this is only called when the ball enters the kill box
 	//what it does is makes fakeWall be fake again

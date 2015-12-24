@@ -4,12 +4,22 @@ using System.Collections;
 public class BumperHit : MonoBehaviour {
 
 
-	[SerializeField]GameObject hitParticles; 
-	
+	[SerializeField]GameObject hitParticles;
 
-	void OnTriggerEnter(Collider col)
+    [SerializeField]float forceRadius = 2f;
+    [SerializeField]float bumpForce = 500f;
+
+	void OnCollisionEnter(Collision obj)
 	{
-		Object temp = Instantiate(hitParticles, col.transform.position, Quaternion.identity);
+        foreach (Collider col in Physics.OverlapSphere(transform.position, forceRadius))
+        {
+            if (col.attachedRigidbody)
+            {
+                col.attachedRigidbody.AddExplosionForce(bumpForce, transform.position, forceRadius);
+            }
+        }
+
+		Object temp = Instantiate(hitParticles, obj.transform.position, Quaternion.identity);
 		Destroy(temp, 1f);
 	}
 	
